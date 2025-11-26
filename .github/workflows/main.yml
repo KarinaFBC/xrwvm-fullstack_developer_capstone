@@ -31,3 +31,5 @@ jobs:
     - name: Run Linter
       run: |
         pwd
+      run: |
+        find . -name "*.py" -exec flake8 {} +
