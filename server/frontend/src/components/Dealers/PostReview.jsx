@@ -4,6 +4,8 @@ import "./Dealers.css";
 import "../assets/style.css";
 import Header from '../Header/Header';
 
+import PostReview from "./components/Dealers/PostReview"
+
 
 const PostReview = () => {
   const [dealer, setDealer] = useState({});
