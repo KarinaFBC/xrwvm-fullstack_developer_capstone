@@ -25,7 +25,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8
       
-      - name: Print working directory
+    - name: Print working directory
       run: pwd
     - name: Run Linter
       run: |
