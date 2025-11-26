@@ -36,6 +36,5 @@ jobs:
         # This command finds all Python files recursively and runs flake8 on them
         find . -name "*.py" -exec flake8 {} +
         echo "Linted all the python files successfully"
-
   
-          
+      "lint": "eslint --ignore-path .gitignore . --fix",
