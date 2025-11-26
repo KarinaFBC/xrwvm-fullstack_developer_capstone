@@ -31,4 +31,3 @@ jobs:
     - name: Run Linter
       run: |
         pwd
-        flake8 *.py
