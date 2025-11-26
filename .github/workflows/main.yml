@@ -27,3 +27,7 @@ jobs:
       
     - name: Print working directory
       run: pwd
+
+    - name: Run Linter
+      run: |
+        pwd
