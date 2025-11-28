@@ -8,10 +8,9 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 
-# from server.djangoapp.restapis import analyze_review_sentiments, get_request, post_review
+import requests
 
 from .models import CarMake, CarModel
-
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 import logging
@@ -92,12 +91,18 @@ def registration(request):
 #Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
 def get_dealerships(request, state="All"):
     if(state == "All"):
-        endpoint = "/fetchDealers"
+        endpoint = "https://karinafb-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/fetchDealers"
     else:
-        endpoint = "/fetchDealers/"+state
+        endpoint = "https://karinafb-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/fetchDealers"+state
     dealerships = get_request(endpoint)
     return JsonResponse({"status":200,"dealers":dealerships})
 
+def get_request(url, params=None):
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 # def get_dealer_reviews(request,dealer_id):
 # ...
@@ -122,7 +127,7 @@ def add_review(request):
 def get_dealer_reviews(request, dealer_id):
     # if dealer id has been provided
     if(dealer_id):
-        endpoint = "/fetchReviews/dealer/"+str(dealer_id)
+        endpoint = "https://karinafb-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/fetchReviews/dealer/"+str(dealer_id)
         reviews = get_request(endpoint)
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail['review'])
@@ -145,7 +150,7 @@ def get_cars(request):
 
 def get_dealer_details(request, dealer_id):
     if(dealer_id):
-        endpoint = "/fetchDealer/"+str(dealer_id)
+        endpoint = "https://karinafb-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/fetchDealer/"+str(dealer_id)
         dealership = get_request(endpoint)
         return JsonResponse({"status":200,"dealer":dealership})
     else:
